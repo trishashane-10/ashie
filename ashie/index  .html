@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5">
+    <title>A ROMANTIC GIFT FOR MY BABY 💜</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Playfair Display, Cormorant Garamond, Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        galaxy: {
+                            base: '#0a051b',
+                            dark: '#0e0728',
+                            deep: '#1a0933',
+                            accent: '#4c1d95',
+                            glow: '#a855f7',
+                            lavender: '#e9d5ff',
+                            lilac: '#c084fc',
+                            gold: '#fbbf24'
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', '"Cormorant Garamond"', 'serif'],
+                        sans: ['"Outfit"', 'sans-serif'],
+                        cursive: ['"Cormorant Garamond"', 'serif']
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'twinkle': 'twinkle 3s ease-in-out infinite alternate',
+                        'warp': 'warp 1.2s cubic-bezier(0.7, 0, 0.84, 0) forwards',
+                        'envelope-open': 'envelopeOpen 0.8s ease-in-out forwards'
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        twinkle: {
+                            '0%': { opacity: '0.3', transform: 'scale(0.8)' },
+                            '100%': { opacity: '1', transform: 'scale(1.2)' },
+                        },
+                        warp: {
+                            '0%': { transform: 'scale(1) rotate(0deg)', filter: 'blur(0px)', opacity: '1' },
+                            '50%': { transform: 'scale(3) rotate(5deg)', filter: 'blur(8px)', opacity: '0.8' },
+                            '100%': { transform: 'scale(10) rotate(15deg)', filter: 'blur(20px)', opacity: '0' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <link rel="stylesheet" href="style (1).css">
+</head>
+<body class="bg-galaxy-base text-purple-100 antialiased min-h-screen selection:bg-galaxy-glow selection:text-white">
+
+    <!-- Global Background Canvas for Galaxy Stars -->
+    <canvas id="galaxy-bg" class="fixed inset-0 pointer-events-none z-0" aria-hidden="true"></canvas>
+
+    <!-- Ambient Sound / Music Player Bar -->
+    <div class="fixed top-4 right-4 z-50 flex items-center gap-2">
+        <button id="music-toggle-btn" class="p-3 rounded-full glass-card hover:bg-purple-900/40 text-purple-200 hover:text-white transition-all shadow-lg flex items-center justify-center border border-purple-500/30" title="Play / Pause Song">
+            <i data-lucide="music" class="w-5 h-5 text-galaxy-lilac animate-pulse"></i>
+            <span id="music-status-text" class="text-xs ml-2 font-medium hidden sm:inline text-purple-200">Silent Sanctuary - 14</span>
+        </button>
+    </div>
+
+    <!-- Music External Option Modal -->
+    <div id="music-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md hidden-screen transition-opacity duration-300">
+        <div class="glass-card max-w-md w-full rounded-2xl p-6 border border-purple-400/30 text-center relative animate-float">
+            <button id="close-music-modal" class="absolute top-4 right-4 text-purple-300 hover:text-white">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-purple-900/60 border border-purple-400/40 flex items-center justify-center">
+                <i data-lucide="disc-3" class="w-8 h-8 text-galaxy-lilac animate-spin" style="animation-duration: 8s;"></i>
+            </div>
+            <h3 class="font-serif text-2xl font-bold text-white mb-1">Our Special Song 🎵</h3>
+            <p class="text-xs text-purple-300 mb-4">"14" by Silent Sanctuary</p>
+            <p class="text-sm text-purple-200/90 mb-6 leading-relaxed">
+                Choose where you'd like to open our romantic anthem, baby! Let it play while you explore your gift universe. 💜
+            </p>
+            <div class="space-y-4">
+                <div class="music-card rounded-2xl border border-purple-400/30 p-4">
+                    <div class="flex items-center gap-4">
+                        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500/40 to-fuchsia-500/20 border border-purple-300/30 flex items-center justify-center shadow-inner">
+                            <i data-lucide="music-2" class="w-7 h-7 text-galaxy-lilac"></i>
+                        </div>
+                        <div class="text-left min-w-0">
+                            <p class="text-[10px] uppercase tracking-[0.25em] text-purple-300">Now playing</p>
+                            <h4 class="font-serif text-xl text-white mt-1">Silent Sanctuary - 14</h4>
+                            <p class="text-xs text-purple-200/80 truncate">A soft love song for my favorite person</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-center gap-1.5 mt-4" aria-label="Equalizer">
+                        <span class="wave-bar"></span>
+                        <span class="wave-bar"></span>
+                        <span class="wave-bar"></span>
+                        <span class="wave-bar"></span>
+                        <span class="wave-bar"></span>
+                        <span class="wave-bar"></span>
+                    </div>
+                </div>
+                <audio id="modal-audio-player" controls class="audio-player w-full" preload="metadata">
+                    <source src="our music.mp3" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+                <button id="toggle-ambient-audio" class="w-full py-3 px-4 bg-purple-600/30 hover:bg-purple-600/50 border border-purple-400/40 rounded-xl text-purple-200 hover:text-white font-medium transition flex items-center justify-center gap-3">
+                    <i data-lucide="volume-2" class="w-5 h-5"></i>
+                    Play Romantic Melody Here
+                </button>
+                <button id="continue-from-music-btn" type="button" class="w-full py-3 px-4 bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-700 hover:from-purple-500 hover:to-indigo-500 rounded-xl text-white font-semibold transition flex items-center justify-center gap-2 shadow-lg">
+                    Continue to My Surprise
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ========================================================================= -->
+    <!-- PAGE 1: INTRODUCTION HERO SCREEN -->
+    <!-- ========================================================================= -->
+    <section id="intro-screen" class="relative z-10 min-h-screen flex flex-col items-center justify-center px-4 py-12 text-center overflow-hidden">
+        <!-- Ambient Nebula Background Layer -->
+        <div class="absolute inset-0 bg-radial-gradient from-purple-900/30 via-transparent to-transparent pointer-events-none"></div>
+        <div class="absolute w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-purple-600/20 rounded-full blur-[120px] pointer-events-none animate-pulse-slow"></div>
+
+        <div id="intro-content-box" class="max-w-xl w-full glass-card p-8 sm:p-10 rounded-3xl border border-purple-400/30 shadow-2xl relative z-20 transition-all duration-700">
+            <!-- Floating Heart Icon -->
+            <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-purple-900/50 border border-purple-400/40 mb-6 shadow-inner animate-float">
+                <i data-lucide="heart" class="w-8 h-8 text-galaxy-lilac fill-galaxy-glow/40"></i>
+            </div>
+
+            <h1 class="font-serif text-3xl sm:text-5xl font-bold tracking-tight text-white mb-6 leading-tight text-glow">
+                Before You Open Your Surprise, Baby…
+            </h1>
+
+            <p class="text-base sm:text-lg text-purple-200/90 leading-relaxed mb-8 font-light">
+                Listen to our special song first, baby. When you're ready, come back here and open your little surprise. I made something special just for you. 💜
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <button id="hero-listen-btn" class="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-purple-950/80 hover:bg-purple-900/90 border border-purple-400/50 text-purple-200 font-medium text-sm sm:text-base flex items-center justify-center gap-2 shadow-lg hover:shadow-purple-500/25 transition-all">
+                    <i data-lucide="disc" class="w-5 h-5 text-galaxy-lilac animate-spin" style="animation-duration: 6s;"></i>
+                    LISTEN TO OUR SONG
+                </button>
+
+                <button id="open-surprise-btn" class="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-700 hover:from-purple-500 hover:to-indigo-500 text-white font-semibold text-sm sm:text-base flex items-center justify-center gap-2 shadow-xl hover:shadow-purple-500/40 transition-all transform active:scale-95 group">
+                    <span>OPEN MY SURPRISE</span>
+                    <i data-lucide="sparkles" class="w-5 h-5 text-purple-200 group-hover:rotate-12 transition-transform"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Song-triggered galaxy love introduction -->
+    <div id="song-galaxy-intro" class="song-galaxy-intro hidden-screen" role="dialog" aria-modal="true" aria-labelledby="song-galaxy-title">
+        <div class="intro-orbit orbit-one"></div><div class="intro-orbit orbit-two"></div>
+        <div class="intro-stars" aria-hidden="true"></div>
+        <div class="song-intro-content">
+            <div class="intro-heart" aria-hidden="true">💜</div>
+            <p class="intro-eyebrow">A little universe, made just for you</p>
+            <h2 id="song-galaxy-title">Hi, my pretty baby ✨</h2>
+            <p class="song-intro-message">While our song plays, remember this: somewhere in this big universe, there is a heart that chooses you every single day. You are my favorite hello, my safest place, and my sweetest forever.</p>
+            <p class="intro-signature">I made all of this just to see you smile. I love you, ashie. 💫</p>
+            <button id="enter-galaxy-btn" class="intro-enter-btn" type="button">Enter our little galaxy <span aria-hidden="true">♡</span></button>
+        </div>
+        <button id="close-song-intro" class="song-intro-close" type="button" aria-label="Close introduction">✕</button>
+    </div>
+
+    <!-- Full-screen photo lightbox -->
+    <div id="photo-lightbox" class="photo-lightbox hidden-screen" role="dialog" aria-modal="true" aria-label="Photo viewer">
+        <button id="close-photo-lightbox" class="lightbox-close" type="button" aria-label="Close photo">✕</button>
+        <p class="lightbox-hint">A little memory, just for us 💜</p>
+        <img id="lightbox-image" src="" alt="Expanded memory photo">
+        <p id="lightbox-caption" class="lightbox-caption">Our favorite memory</p>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- MAIN GALAXY UNIVERSE EXPERIENCE (GALAXY PAGE & GIFT HUB) -->
+    <!-- ========================================================================= -->
+    <main id="universe-screen" class="relative z-10 min-h-screen hidden-screen pb-20">
+        
+        <!-- Universe Navigation Header -->
+        <header class="sticky top-0 z-40 bg-galaxy-base/80 backdrop-blur-xl border-b border-purple-900/40 px-4 py-4 mb-8">
+            <div class="max-w-6xl mx-auto flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-purple-900/60 border border-purple-400/30 flex items-center justify-center">
+                        <i data-lucide="sparkles" class="w-5 h-5 text-galaxy-lilac"></i>
+                    </div>
+                    <div>
+                        <h2 class="font-serif text-lg sm:text-xl font-bold text-white">Our Galaxy Universe</h2>
+                        <p class="text-xs text-purple-300">Made with love for my baby 💜</p>
+                    </div>
+                </div>
+                <button id="return-top-btn" class="text-xs text-purple-300 hover:text-white bg-purple-950/60 border border-purple-700/40 px-3 py-1.5 rounded-xl flex items-center gap-1.5 transition">
+                    <i data-lucide="arrow-up" class="w-3.5 h-3.5"></i>
+                    <span>Top</span>
+                </button>
+            </div>
+        </header>
+
+        <div class="max-w-5xl mx-auto px-4">
+            
+            <!-- Galaxy Universe Hero Banner -->
+            <section class="text-center py-10 mb-12 glass-card rounded-3xl p-6 sm:p-10 border border-purple-500/20 relative overflow-hidden">
+                <div class="absolute -top-10 -right-10 w-40 h-40 bg-purple-500/20 rounded-full blur-3xl pointer-events-none"></div>
+                <span class="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider bg-purple-900/60 border border-purple-400/30 text-purple-200 uppercase mb-4">
+                    ✨ Cosmic Love Chapter
+                </span>
+                <h1 class="font-serif text-3xl sm:text-5xl font-bold text-white mb-4 text-glow">
+                    A Little Universe Made for You
+                </h1>
+                <p class="text-sm sm:text-base text-purple-200/90 max-w-2xl mx-auto leading-relaxed">
+                    Explore our four enchanted gift cards created under the galaxy stars. Each card holds a piece of my heart just for you, baby.
+                </p>
+            </section>
+
+            <!-- 4 GIFT CARDS OVERVIEW GRID -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
+                
+                <!-- CARD 1 PREVIEW -->
+                <a href="#card-1-section" class="glass-card glass-card-hover rounded-3xl p-6 flex flex-col justify-between group relative overflow-hidden">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 rounded-2xl bg-purple-900/60 border border-purple-400/30 flex items-center justify-center text-galaxy-lilac group-hover:scale-110 transition-transform">
+                            <i data-lucide="mail" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <span class="text-xs font-semibold text-purple-400 tracking-wider uppercase">Gift Card 01</span>
+                            <h3 class="font-serif text-xl font-bold text-white">A Letter for You</h3>
+                        </div>
+                    </div>
+                    <p class="text-sm text-purple-300/80 mb-6">Unseal an elegant lavender envelope to read a heartfelt romantic message written for you.</p>
+                    <div class="flex items-center text-xs font-medium text-galaxy-lilac group-hover:translate-x-1 transition-transform">
+                        Open Envelope & Letter <i data-lucide="chevron-right" class="w-4 h-4 ml-1"></i>
+                    </div>
+                </a>
+
+                <!-- CARD 2 PREVIEW -->
+                <a href="#card-2-section" class="glass-card glass-card-hover rounded-3xl p-6 flex flex-col justify-between group relative overflow-hidden">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 rounded-2xl bg-purple-900/60 border border-purple-400/30 flex items-center justify-center text-galaxy-lilac group-hover:scale-110 transition-transform">
+                            <i data-lucide="camera" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <span class="text-xs font-semibold text-purple-400 tracking-wider uppercase">Gift Card 02</span>
+                            <h3 class="font-serif text-xl font-bold text-white">Our Little Memories</h3>
+                        </div>
+                    </div>
+                    <p class="text-sm text-purple-300/80 mb-6">10 photo frames showcasing our happiest memories together, plus a story portrait frame.</p>
+                    <div class="flex items-center text-xs font-medium text-galaxy-lilac group-hover:translate-x-1 transition-transform">
+                        Explore Gallery <i data-lucide="chevron-right" class="w-4 h-4 ml-1"></i>
+                    </div>
+                </a>
+
+                <!-- CARD 3 PREVIEW -->
+                <a href="#card-3-section" class="glass-card glass-card-hover rounded-3xl p-6 flex flex-col justify-between group relative overflow-hidden">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 rounded-2xl bg-purple-900/60 border border-purple-400/30 flex items-center justify-center text-galaxy-lilac group-hover:scale-110 transition-transform">
+                            <i data-lucide="flower-2" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <span class="text-xs font-semibold text-purple-400 tracking-wider uppercase">Gift Card 03</span>
+                            <h3 class="font-serif text-xl font-bold text-white">18 Tulips for My Baby</h3>
+                        </div>
+                    </div>
+                    <p class="text-sm text-purple-300/80 mb-6">A realistic botanical bouquet of 18 deep violet and royal purple tulips tied with ribbon.</p>
+                    <div class="flex items-center text-xs font-medium text-galaxy-lilac group-hover:translate-x-1 transition-transform">
+                        View Bouquet <i data-lucide="chevron-right" class="w-4 h-4 ml-1"></i>
+                    </div>
+                </a>
+
+                <!-- CARD 4 PREVIEW -->
+                <a href="#card-4-section" class="glass-card glass-card-hover rounded-3xl p-6 flex flex-col justify-between group relative overflow-hidden">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 rounded-2xl bg-purple-900/60 border border-purple-400/30 flex items-center justify-center text-galaxy-lilac group-hover:scale-110 transition-transform">
+                            <i data-lucide="sparkle" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <span class="text-xs font-semibold text-purple-400 tracking-wider uppercase">Gift Card 04</span>
+                            <h3 class="font-serif text-xl font-bold text-white">10 Reasons Why I Love You</h3>
+                        </div>
+                    </div>
+                    <p class="text-sm text-purple-300/80 mb-6">An interactive sky fireworks card revealing ten timeless reasons why I choose you every day.</p>
+                    <div class="flex items-center text-xs font-medium text-galaxy-lilac group-hover:translate-x-1 transition-transform">
+                        Watch Fireworks & Reasons <i data-lucide="chevron-right" class="w-4 h-4 ml-1"></i>
+                    </div>
+                </a>
+            </div>
+
+
+            <!-- ========================================================================= -->
+            <!-- CARD 1: A LETTER FOR YOU -->
+            <!-- ========================================================================= -->
+            <section id="card-1-section" class="scroll-mt-24 mb-20">
+                <div class="glass-card rounded-3xl p-6 sm:p-10 border border-purple-500/30">
+                    <div class="text-center mb-8">
+                        <span class="text-xs uppercase tracking-widest text-galaxy-lilac font-semibold">Gift Card 1</span>
+                        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-white mt-1">A Letter for You 💌</h2>
+                        <p class="text-sm text-purple-300 mt-2">Tap the envelope to unseal my letter, baby!</p>
+                    </div>
+
+                    <!-- Envelope Interaction Container -->
+                    <div class="max-w-xl mx-auto flex flex-col items-center">
+                        <div id="envelope-card" class="envelope-wrapper relative cursor-pointer w-full max-w-md bg-purple-950/70 border-2 border-purple-400/40 rounded-2xl p-6 sm:p-8 text-center shadow-2xl hover:border-purple-300 transition-all group">
+                            <div class="w-16 h-16 mx-auto rounded-full bg-purple-900/80 border border-purple-300/50 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                                <i data-lucide="heart" class="w-8 h-8 text-purple-300 fill-purple-400/30"></i>
+                            </div>
+                            <h3 class="font-serif text-2xl font-semibold text-white mb-2">To My Dearest Baby</h3>
+                            <p class="text-xs text-purple-300">Click anywhere to open your letter</p>
+                        </div>
+
+                        <!-- Revealed Letter Container -->
+                        <div id="revealed-letter" class="hidden-screen w-full mt-6 glass-card rounded-2xl p-6 sm:p-8 border border-purple-400/30 animate-float">
+                            <div class="flex flex-col sm:flex-row items-center gap-6 mb-6 pb-6 border-b border-purple-500/20">
+                                <!-- Editable Photo Container -->
+                                <div class="relative group w-32 h-32 flex-shrink-0">
+                                    <img id="letter-photo-img" src="1st.jpg" alt="Our Portrait" class="photo-zoom w-32 h-32 object-cover rounded-2xl border-2 border-purple-300 shadow-md" title="Click to view photo full screen">
+                                    <label class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-xs text-white rounded-2xl cursor-pointer">
+                                        <span>Change Photo</span>
+                                        <input type="file" accept="image/*" class="hidden" onchange="previewImage(event, 'letter-photo-img')">
+                                    </label>
+                                </div>
+                                <div class="text-center sm:text-left">
+                                    <h4 class="font-serif text-2xl font-bold text-white">My Dearest Love,</h4>
+                                    <p class="text-xs text-purple-300 mt-1">Written under our star-filled galaxy </p>
+                                    <span class="inline-block mt-2 text-[10px] bg-purple-900/60 border border-purple-400/30 text-purple-200 px-2.5 py-1 rounded-full">Tip: You can click the text to edit & personalize!</span>
+                                </div>
+                            </div>
+
+                            <div class="floating-heart-trio" aria-label="Three floating hearts"><span>♡</span><span>♥</span><span>♡</span></div>
+                            <p class="letter-reading-hint">Take your time reading this, baby. Every word comes from my heart. ✨</p>
+                            <div contenteditable="true" class="text-sm sm:text-base text-purple-100/90 leading-relaxed space-y-4 font-light text-justify p-2 rounded">
+                                <p>My sweet ashie,</p>
+                                <p>From the moment you entered my life babyyy, everything felt brighter and infinitely more meaningful na po... You are my comfort after a long day, my favorite laugh, and my absolute favorite person in this whole wide universe(loveu).</p>
+                                <p>I built this little galaxy for you because ordinary words could never fully capture how much you mean to me. I hope every tulip, memory, and star in this surprise brings a warm smile to your beautiful face my pretty ashie.</p>
+                                <p>Thank you for loving me po, for being you, and for making our story my favorite adventure. I love you endlessly, my baby ashie. 💜</p>
+                            </div>
+
+                            <div class="mt-6 text-right font-serif text-lg font-bold text-galaxy-lilac italic">
+                                Forever & Always Yours ✨
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- ========================================================================= -->
+            <!-- CARD 2: OUR LITTLE MEMORIES -->
+            <!-- ========================================================================= -->
+            <section id="card-2-section" class="scroll-mt-24 mb-20">
+                <div class="glass-card rounded-3xl p-6 sm:p-10 border border-purple-500/30">
+                    <div class="text-center mb-10">
+                        <span class="text-xs uppercase tracking-widest text-galaxy-lilac font-semibold">Gift Card 2</span>
+                        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-white mt-1">Our Little Memories 📸</h2>
+                        <p class="text-sm text-purple-300 mt-2">10 precious moments of us. Tap any photo to view it big, or use “Change Photo” to replace it.</p>
+                    </div>
+
+                    <!-- 10 Photo Frames Grid -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-12" id="memory-gallery-grid">
+                        <!-- Javascript will dynamically inject 10 memory cards -->
+                    </div>
+
+                    <!-- Dedicated 9:16 Instagram Story Frame -->
+                    <div class="max-w-md mx-auto glass-card rounded-3xl p-6 border border-purple-400/40 text-center">
+                        <div class="flex items-center justify-center gap-2 mb-4 text-purple-300">
+                            <i data-lucide="camera" class="w-5 h-5 text-galaxy-lilac"></i>
+                            <h3 class="font-serif text-xl font-bold text-white">Our Story Highlight</h3>
+                        </div>
+                        <div class="relative aspect-[9/16] bg-purple-950/80 rounded-2xl border-2 border-purple-400/40 overflow-hidden shadow-2xl flex items-center justify-center group">
+                            
+<video
+    id="highlight-video"
+    class="w-full h-full object-cover"
+    autoplay
+    loop
+    muted
+    playsinline
+    controls
+    preload="auto"
+>
+    <source src="cute.MOV" type="video/mp4">
+    Your browser does not support this video.
+</video>
+
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none"></div>
+                            <div class="absolute bottom-4 left-4 right-4 text-left pointer-events-none">
+                                <p class="text-xs font-semibold text-galaxy-lilac">@our_love_story</p>
+                                <p class="text-sm font-medium text-white">Every second with you is my favorite memory💜</p>
+                            </div>
+                            <label class="absolute top-4 right-4 bg-purple-900/80 hover:bg-purple-800 text-white text-xs px-3 py-1.5 rounded-xl border border-purple-400/40 cursor-pointer transition opacity-90 hover:opacity-100">
+                                <span>Change Video/Photo</span>
+                                <input type="file" accept="video/*,image/*" class="hidden" onchange="uploadStoryMedia(event)">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- ========================================================================= -->
+            <!-- CARD 3: 18 TULIPS FOR MY BABY -->
+            <!-- ========================================================== ============== -->
+            <section id="card-3-section" class="scroll-mt-24 mb-20">
+                <div class="glass-card rounded-3xl p-6 sm:p-10 border border-purple-500/30 text-center">
+                    <div class="mb-8">
+                        <span class="text-xs uppercase tracking-widest text-galaxy-lilac font-semibold">Gift Card 3</span>
+                        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-white mt-1">18 Tulips for My Baby 🌷</h2>
+                        <p class="text-sm text-purple-300 mt-2">A lush botanical bouquet blooming eternally under the stars.</p>
+                    </div>
+
+                    <!-- Detailed SVG Vector Illustration of 18 Realistic Overlapping Purple Tulips -->
+                    <div class="max-w-lg mx-auto mb-8 relative group">
+                        <div class="absolute inset-0 bg-purple-600/20 rounded-full blur-3xl pointer-events-none"></div>
+                        
+                        <svg viewBox="0 0 500 650" class="w-full h-auto max-h-[500px] drop-shadow-[0_15px_30px_rgba(168,85,247,0.3)] transition-transform duration-500 group-hover:scale-105" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <!-- Gradients for Stems & Leaves -->
+                                <linearGradient id="stemGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#2d5a27"/>
+                                    <stop offset="50%" stop-color="#1e3f1a"/>
+                                    <stop offset="100%" stop-color="#0f240c"/>
+                                </linearGradient>
+                                <linearGradient id="leafGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" stop-color="#3a7033"/>
+                                    <stop offset="50%" stop-color="#254d21"/>
+                                    <stop offset="100%" stop-color="#142e12"/>
+                                </linearGradient>
+
+                                <!-- Tulip Flower Petal Gradients (Deep Royal Purple, Violet & Lilac Layering) -->
+                                <linearGradient id="tulipDark" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" stop-color="#a855f7"/>
+                                    <stop offset="50%" stop-color="#6b21a8"/>
+                                    <stop offset="100%" stop-color="#3b0764"/>
+                                </linearGradient>
+                                <linearGradient id="tulipMedium" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" stop-color="#c084fc"/>
+                                    <stop offset="60%" stop-color="#7e22ce"/>
+                                    <stop offset="100%" stop-color="#4c1d95"/>
+                                </linearGradient>
+                                <linearGradient id="tulipLight" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" stop-color="#e9d5ff"/>
+                                    <stop offset="50%" stop-color="#a855f7"/>
+                                    <stop offset="100%" stop-color="#581c87"/>
+                                </linearGradient>
+                                <linearGradient id="ribbonGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#f3e8ff"/>
+                                    <stop offset="50%" stop-color="#c084fc"/>
+                                    <stop offset="100%" stop-color="#7e22ce"/>
+                                </linearGradient>
+
+                                <!-- Reusable Tulip Blossom Definition -->
+                                <g id="tulipBlossom">
+                                    <!-- Back Petals -->
+                                    <path d="M -22 0 C -35 -25 -20 -60 0 -70 C 20 -60 35 -25 22 0 Z" fill="url(#tulipDark)"/>
+                                    <!-- Left Petal -->
+                                    <path d="M -25 0 C -40 -30 -15 -65 -3 -50 C 5 -30 -10 -10 -25 0 Z" fill="url(#tulipMedium)"/>
+                                    <!-- Right Petal -->
+                                    <path d="M 25 0 C 40 -30 15 -65 3 -50 C -5 -30 10 -10 25 0 Z" fill="url(#tulipMedium)"/>
+                                    <!-- Center Main Petal -->
+                                    <path d="M -18 5 C -25 -35 0 -75 0 -75 C 0 -75 25 -35 18 5 C 10 20 -10 20 -18 5 Z" fill="url(#tulipLight)"/>
+                                </g>
+                            </defs>
+
+                            <!-- Converging Stems Base -->
+                            <g stroke="url(#stemGrad)" stroke-width="8" stroke-linecap="round" fill="none">
+                                <path d="M 120 220 Q 220 380 250 520"/>
+                                <path d="M 160 210 Q 230 370 250 520"/>
+                                <path d="M 200 180 Q 240 360 250 520"/>
+                                <path d="M 250 160 Q 250 350 250 520"/>
+                                <path d="M 300 180 Q 260 360 250 520"/>
+                                <path d="M 340 210 Q 270 370 250 520"/>
+                                <path d="M 380 220 Q 280 380 250 520"/>
+                                <path d="M 140 260 Q 220 400 250 520"/>
+                                <path d="M 360 260 Q 280 400 250 520"/>
+                            </g>
+
+                            <!-- Tapered Green Leaves -->
+                            <path d="M 250 500 C 180 420 100 350 70 280 C 120 320 200 400 250 490 Z" fill="url(#leafGrad)"/>
+                            <path d="M 250 500 C 320 420 400 350 430 280 C 380 320 300 400 250 490 Z" fill="url(#leafGrad)"/>
+                            <path d="M 250 470 C 200 380 150 280 120 200 C 170 260 220 370 250 460 Z" fill="url(#leafGrad)"/>
+                            <path d="M 250 470 C 300 380 350 280 380 200 C 330 260 280 370 250 460 Z" fill="url(#leafGrad)"/>
+
+                            <!-- EXACTLY 18 TULIP BLOSSOMS ARRANGED IN A DENSE NATURAL BOUQUET -->
+                            <!-- Row 1: Top Arch (5 flowers) -->
+                            <use href="#tulipBlossom" x="150" y="150" transform="scale(0.85) rotate(-18 150 150)" />
+                            <use href="#tulipBlossom" x="200" y="115" transform="scale(0.9) rotate(-8 200 115)" />
+                            <use href="#tulipBlossom" x="250" y="100" transform="scale(0.95)" />
+                            <use href="#tulipBlossom" x="300" y="115" transform="scale(0.9) rotate(8 300 115)" />
+                            <use href="#tulipBlossom" x="350" y="150" transform="scale(0.85) rotate(18 350 150)" />
+
+                            <!-- Row 2: Upper Center (5 flowers) -->
+                            <use href="#tulipBlossom" x="120" y="210" transform="scale(0.85) rotate(-25 120 210)" />
+                            <use href="#tulipBlossom" x="175" y="180" transform="scale(0.9) rotate(-12 175 180)" />
+                            <use href="#tulipBlossom" x="250" y="165" transform="scale(1) rotate(2 250 165)" />
+                            <use href="#tulipBlossom" x="325" y="180" transform="scale(0.9) rotate(12 325 180)" />
+                            <use href="#tulipBlossom" x="380" y="210" transform="scale(0.85) rotate(25 380 210)" />
+
+                            <!-- Row 3: Lower Center (5 flowers) -->
+                            <use href="#tulipBlossom" x="150" y="260" transform="scale(0.88) rotate(-15 150 260)" />
+                            <use href="#tulipBlossom" x="210" y="230" transform="scale(0.95) rotate(-5 210 230)" />
+                            <use href="#tulipBlossom" x="280" y="230" transform="scale(0.95) rotate(5 280 230)" />
+                            <use href="#tulipBlossom" x="350" y="260" transform="scale(0.88) rotate(15 350 260)" />
+                            <use href="#tulipBlossom" x="250" y="225" transform="scale(1.05)" />
+
+                            <!-- Row 4: Front Base Layer (3 flowers) -->
+                            <use href="#tulipBlossom" x="190" y="295" transform="scale(0.92) rotate(-8 190 295)" />
+                            <use href="#tulipBlossom" x="250" y="290" transform="scale(1)" />
+                            <use href="#tulipBlossom" x="310" y="295" transform="scale(0.92) rotate(8 310 295)" />
+
+                            <!-- Satin Ribbon Wrap and Bow -->
+                            <g>
+                                <!-- Ribbon Band -->
+                                <path d="M 210 440 Q 250 460 290 440 Q 290 470 250 480 Q 210 470 210 440 Z" fill="url(#ribbonGrad)"/>
+                                <!-- Bow Loops -->
+                                <path d="M 250 460 C 210 420 160 450 210 475 Z" fill="url(#ribbonGrad)"/>
+                                <path d="M 250 460 C 290 420 340 450 290 475 Z" fill="url(#ribbonGrad)"/>
+                                <!-- Ribbon Tails -->
+                                <path d="M 245 470 Q 220 540 190 580 C 210 570 230 550 248 480 Z" fill="url(#ribbonGrad)"/>
+                                <path d="M 255 470 Q 280 540 310 580 C 290 570 270 550 252 480 Z" fill="url(#ribbonGrad)"/>
+                                <!-- Bow Center Knot -->
+                                <circle cx="250" cy="465" r="12" fill="#e9d5ff" stroke="#7e22ce" stroke-width="2"/>
+                            </g>
+                        </svg>
+                    </div>
+
+                    <!-- Romantic Flower Message Box -->
+                    <div class="max-w-md mx-auto glass-card rounded-2xl p-6 border border-purple-400/30">
+                        <p class="text-base sm:text-lg text-purple-100 font-serif italic leading-relaxed">
+                            “18 tulips for my baby. Every flower is a little reminder of how special you are to me. 💜”
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- ========================================================================= -->
+            <!-- CARD 4: 10 REASONS WHY I LOVE YOU -->
+            <!-- ========================================================================= -->
+            <section id="card-4-section" class="scroll-mt-24 mb-20">
+                <div class="glass-card rounded-3xl p-6 sm:p-10 border border-purple-500/30 relative overflow-hidden">
+                    
+                    <!-- Canvas for Interactive Purple & Gold Fireworks -->
+                    <canvas id="fireworks-canvas" class="absolute inset-0 pointer-events-none z-0 opacity-80"></canvas>
+
+                    <div class="relative z-10 text-center mb-8">
+                        <span class="text-xs uppercase tracking-widest text-galaxy-lilac font-semibold">Gift Card 4</span>
+                        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-white mt-1">10 Reasons Why I Love You ✨</h2>
+                        <p class="text-sm text-purple-300 mt-2">A fireworks celebration dedicated to us, baby.</p>
+                    </div>
+
+                    <!-- Interactive Carousel Container -->
+                    <div class="relative z-10 max-w-xl mx-auto">
+                        <div class="glass-card rounded-2xl p-8 sm:p-10 border border-purple-400/40 text-center min-h-[260px] flex flex-col justify-between shadow-2xl">
+                            
+                            <!-- Counter Badge -->
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="text-xs font-semibold text-purple-300 bg-purple-900/60 border border-purple-400/30 px-3 py-1 rounded-full">
+                                    Reason <span id="reason-current-num">1</span> of 10
+                                </span>
+                                <i data-lucide="sparkles" class="w-5 h-5 text-galaxy-gold animate-bounce"></i>
+                            </div>
+
+                            <!-- Dynamic Reason Text Display -->
+                            <p id="reason-text-display" class="font-serif text-xl sm:text-2xl text-white font-medium leading-relaxed my-auto text-glow">
+                                "I love the way you make ordinary moments feel special."
+                            </p>
+
+                            <!-- Navigation Controls -->
+                            <div class="flex items-center justify-between gap-4 mt-6 pt-4 border-t border-purple-500/20">
+                                <button id="prev-reason-btn" class="px-5 py-2.5 rounded-xl bg-purple-950/80 hover:bg-purple-900/90 border border-purple-400/40 text-purple-200 text-xs sm:text-sm font-semibold flex items-center gap-1.5 transition disabled:opacity-40">
+                                    <i data-lucide="chevron-left" class="w-4 h-4"></i> PREVIOUS
+                                </button>
+                                <button id="next-reason-btn" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white text-xs sm:text-sm font-semibold flex items-center gap-1.5 transition shadow-lg">
+                                    NEXT REASON <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Card 4 Conclusion Banner (Shows on final reason or always below) -->
+                        <div class="mt-8 glass-card rounded-2xl p-6 border border-purple-400/30 text-center">
+                            <p class="text-sm sm:text-base text-purple-200 font-serif italic">
+                                “Ten little reasons, countless beautiful moments, and one heart that keeps choosing you. I love you, baby. Always. 💜”
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- ========================================================================= -->
+            <!-- SECTION 5: FINAL LETTER PAGE -->
+            <!-- ========================================================================= -->
+            <section id="final-letter-section" class="scroll-mt-24 mb-16">
+                <div class="glass-card rounded-3xl p-6 sm:p-12 border border-purple-400/40 text-center relative overflow-hidden">
+                    <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-purple-900/60 border border-purple-300/40 mb-6 animate-float">
+                        <i data-lucide="infinity" class="w-8 h-8 text-galaxy-lilac"></i>
+                    </div>
+
+                    <h2 class="font-serif text-3xl sm:text-5xl font-bold text-white mb-6 text-glow">
+                        One Last Thing, My Baby
+                    </h2>
+
+                    <!-- Final Letter Content Box -->
+                    <div class="max-w-2xl mx-auto glass-card rounded-2xl p-6 sm:p-10 border border-purple-400/30 text-left mb-8">
+                        <div contenteditable="true" class="text-sm sm:text-base text-purple-100/90 leading-relaxed space-y-4 font-light text-justify p-2 rounded">
+                            <p>I made this little universe just for you, baby. Every picture, every flower, every star, and every little surprise was chosen with you in mind.</p>
+                            <p>Thank you for the memories we share, the conversations, the laughter, and all the little moments that make our story special.</p>
+                            <p>Even ten reasons cannot explain everything I appreciate about you. There will always be more little things to love and discover about you.</p>
+                            <p>I hope we keep creating beautiful memories together.</p>
+                            <p>This little galaxy is for you, my baby.</p>
+                            <p class="font-serif text-lg font-semibold text-galaxy-lilac">I love you. Always. 💜</p>
+                        </div>
+                    </div>
+
+                    <!-- Dual Portrait Photo Display Container -->
+                    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-lg mx-auto mb-8">
+                        <div class="relative group w-full sm:w-1/2 aspect-[4/5]">
+                            <img id="final-photo-1" src="kiss.jpg" class="photo-zoom w-full h-full object-cover rounded-2xl border-2 border-purple-400/40 shadow-xl" alt="Our Memory 1" title="Click to view photo full screen">
+                            <label class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-xs text-white rounded-2xl cursor-pointer">
+                                <span>Change Photo</span>
+                                <input type="file" accept="image/*" class="hidden" onchange="previewImage(event, 'final-photo-1')">
+                            </label>
+                        </div>
+                        <div class="relative group w-full sm:w-1/2 aspect-[4/5]">
+                            <img id="final-photo-2" src="smile.jpg" class="photo-zoom w-full h-full object-cover rounded-2xl border-2 border-purple-400/40 shadow-xl" alt="Our Memory 2" title="Click to view photo full screen">
+                            <label class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-xs text-white rounded-2xl cursor-pointer">
+                                <span>Change Photo</span>
+                                <input type="file" accept="image/*" class="hidden" onchange="previewImage(event, 'final-photo-2')">
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="pt-6 border-t border-purple-500/20 text-xs text-purple-300">
+                        Made with infinite love for my baby 💜 • Forever & Always
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Hidden Audio Element for Optional Background Melody -->
+    <audio id="bg-audio" loop src="our music.mp3" preload="none"></audio>
+
+
+    <!-- ========================================================================= -->
+    <!-- JAVASCRIPT LOGIC -->
+    <!-- ========================================================================= -->
+    <script src="script.js" defer></script>
+</body>
+</html>
